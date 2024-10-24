@@ -1,7 +1,3 @@
-Here is an enhanced and refined version of the report for the design of an Internet-based collaboration system. The updated content integrates the suggested improvements for technical depth, architecture clarity, and alignment with ADD and ATAM methodologies.
-
----
-
 # Design of an Internet-Based Collaboration System
 
 ## Table of Contents
