@@ -173,8 +173,8 @@ This design lays out a scalable, secure, and user-friendly platform that meets t
 
 ## References
 
-- **Attribute-Driven Design (ADD) Methodology**
-- **Architecture Tradeoff Analysis Method (ATAM)**
-- **WebRTC Specifications**
-- **GDPR and HIPAA Compliance Guidelines**
-- **OWASP Security Practices**
+- Attribute-Driven Design (ADD) Methodology: ADD is a structured approach for designing software architectures, focusing on addressing quality attributes by systematically decomposing the system into components. It involves steps like identifying architectural drivers, choosing design concepts, and iteratively refining the architecture​(ADD Version 2.0).
+- Architecture Tradeoff Analysis Method (ATAM): ATAM helps evaluate architectural decisions by examining how well the architecture aligns with business goals and quality attributes. It identifies trade-offs and risks in architectural choices to ensure that the system meets its intended quality requirements.
+- WebRTC Specifications: WebRTC is an open-source framework that enables real-time audio, video, and data sharing through peer-to-peer connections. It provides the necessary APIs and protocols to establish secure and low-latency communication, making it suitable for video conferencing and collaboration tools.
+- GDPR and HIPAA Compliance Guidelines: These guidelines define the standards for handling personal data to ensure privacy and security. GDPR focuses on the protection of data for users in the EU, while HIPAA sets requirements for managing healthcare information in the United States.
+- OWASP Security Practices: OWASP provides best practices for securing web applications, focusing on identifying and mitigating common security risks such as injection attacks, cross-site scripting (XSS), and data encryption. It helps ensure that the platform meets industry standards for security.
