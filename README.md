@@ -1,80 +1,69 @@
-# Design of an Internet-Based Collaboration System
+# Designing an Internet-Based Collaboration System
 
 ## Table of Contents
 
-1. [Project Context](#1-project-context)
-2. [Tabular Format](#2-tabular-format)
+1. [Project Overview](#1-project-overview)
+2. [Key Goals and Features](#2-key-goals-and-features)
 3. [Constraints](#3-constraints)
-4. [Functionalities](#4-functionalities)
-5. [Architectural Drivers](#5-architectural-drivers)
-6. [ADD Process with Iterations](#6-add-process-with-iterations)
-7. [Compliance Analysis Using ATAM](#7-compliance-analysis-using-atam)
-8. [Conclusion](#8-conclusion)
-9. [Appendix: Detailed Process Flows](#9-appendix-detailed-process-flows)
+4. [Core Functions](#4-core-functions)
+5. [Important Design Considerations](#5-important-design-considerations)
+6. [Design Process Using ADD](#6-design-process-using-add)
+7. [Evaluating the Design with ATAM](#7-evaluating-the-design-with-atam)
+8. [Wrapping Up](#8-wrapping-up)
+9. [Process Details](#9-process-details)
 10. [References](#10-references)
 
 ---
 
-## 1. Project Context
+## 1. Project Overview
 
 ### Introduction
 
-The goal is to design an Internet-based collaboration system that enhances global teamwork among virtual teams, such as those involved in globally distributed software development projects. The system will provide a comprehensive suite of communication and collaboration tools, including speech communication, video conferencing, email, file sharing, and a shared whiteboard for brainstorming and sketching ideas (e.g., drawing UML diagrams for software design). The system must maintain high scalability, responsiveness, and availability to support varying user loads globally.
+We're creating an Internet-based collaboration platform to help remote teams work together smoothly, no matter where they are. It’s especially useful for teams working on complex projects like software development. This system will offer a range of tools—video calls, chat, email, file sharing, and even a shared whiteboard for brainstorming sessions and drawing things like UML diagrams. It’s all about making remote work feel as close to in-person collaboration as possible.
 
-### Domain
+### The Bigger Picture
 
-The system operates within the domain of collaborative software tools, focusing on supporting remote teams that require real-time interaction and sharing of complex ideas. Integration with existing tools like Slack, Microsoft Teams, and Trello will further enhance its appeal.
+This system sits in the realm of collaborative tools. It’s meant for teams that need to share ideas quickly and interact in real time. We also want it to play well with existing tools like Slack, Teams, and Trello, so that teams don’t have to switch between different platforms.
 
-### Business Goals
+### What We Want to Achieve
 
-- **Expand Global Collaboration**: Facilitate seamless collaboration among team members across different geographical locations.
-- **Enhance Productivity for Distributed Teams**: Provide tools that improve efficiency and productivity in remote work settings.
-- **Improve Brainstorming and Design Processes**: Enable real-time collaborative brainstorming and design.
-- **Increase Market Reach**: Develop a versatile platform appealing to a broad market, including various industries and user bases.
-- **Minimize Downtime**: Ensure high availability and reliability to maintain user trust and satisfaction.
-- **Provide Insights into System Usage**: Offer analytics and tracking to understand user behavior and improve the system.
-- **Foster Innovation in Remote Teamwork**: Encourage new ways of collaborating remotely through innovative features.
-- **Maintain Brand Reputation**: Uphold a reputation for quality, reliability, and security.
-- **Meet Industry Standards**: Comply with relevant industry regulations and standards.
-- **Provide Cost-effective Solutions**: Offer a competitive product in terms of both development and operational costs.
+- **Make Remote Work Easy**: Help teams around the world collaborate as if they’re in the same room.
+- **Boost Productivity**: Give teams tools that help them work efficiently, no matter where they are.
+- **Support Creative Work**: Enable real-time brainstorming with tools like a shared whiteboard.
+- **Reach a Wide Audience**: Make the system versatile enough for use in various industries.
+- **Stay Reliable**: Keep the system up and running, even if things go wrong.
+- **Understand Users**: Track how people use the system to make it better over time.
+- **Keep Innovating**: Offer new ways to work together that other tools might not have.
+- **Build Trust**: Make sure the system is secure and keeps user data safe.
+- **Meet Regulations**: Follow rules like GDPR and HIPAA to ensure privacy.
+- **Keep Costs Down**: Deliver a great product without breaking the bank.
 
-### Primary Stakeholders
+### Who Cares About This?
 
-- **End Users**: Software engineers, designers, project managers, and other professionals who will use the system for collaboration.
-  - **Expectations**: User-friendly interface, seamless real-time collaboration, reliable performance, and support for various input/output devices.
-- **Business Owners/Company Management**: The organization developing and deploying the system.
-  - **Expectations**: Achieve business goals within constraints, maximize return on investment, and expand market presence.
-- **System Administrators/IT Support**: Personnel responsible for maintaining the system's infrastructure.
-  - **Expectations**: Ease of deployment, monitoring, troubleshooting, and system stability.
-- **Regulatory Bodies**: Entities ensuring compliance with data protection and privacy laws.
-  - **Expectations**: Compliance with regulations such as GDPR and HIPAA.
-- **Investors/Stakeholders**: Individuals or entities investing in the development of the system.
-  - **Expectations**: Timely delivery within budget, with a competitive advantage in the market.
-
-### Stakeholder Interactions with the System
-
-- **End Users**: Use the system daily for communication, file sharing, and collaborative work.
-- **System Administrators**: Deploy updates, monitor system health, manage user accounts, and ensure security.
-- **Business Owners**: Make strategic decisions based on system performance and market feedback.
+- **End Users**: The people using this system daily—developers, designers, managers—expect a smooth, easy-to-use tool that doesn’t get in their way.
+- **Business Owners**: They want to see a good return on their investment and a system that reaches a lot of users.
+- **System Admins**: These are the folks who keep everything running smoothly and need tools that make monitoring and troubleshooting easy.
+- **Regulators**: They’ll be checking that we’re following privacy laws and keeping data safe.
+- **Investors**: They’re looking for a product that hits the market quickly and stands out from competitors.
 
 ---
 
-## 2. Tabular Format
+## 2. Key Goals and Features
 
-### Business Goals, Engineering Objectives, Quality Attributes, and Quality Attribute Scenarios
+### Connecting Business Goals with Technical Needs
 
-| **Business Goals**                              | **Engineering Objectives**                         | **Quality Attributes** | **Quality Attribute Scenarios**                                                                                                                                                                                                                                 |
-|-------------------------------------------------|----------------------------------------------------|------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| **Expand Global Collaboration**                 | Enable real-time communication                     | **Responsiveness**     | *When* users are engaged in audio/video conferencing, *the system* should maintain a latency of less than 100ms *in order to* ensure smooth communication.                                                                                                      |
-| **Enhance Productivity for Distributed Teams**  | Support seamless user experience                   | **Availability**       | *When* a network disconnection occurs, *the system* should attempt reconnection up to three times within 15 seconds *in order to* maintain a seamless user experience.                                                                                           |
-| **Improve Brainstorming and Design Processes**  | Support diverse input methods                      | **Usability**          | *When* a user connects an input device (e.g., wireless pen), *the system* should recognize and configure it within 2 seconds without user intervention *to* provide a seamless experience.                                                                      |
-| **Increase Market Reach**                       | Ensure compatibility with various devices and platforms | **Interoperability**   | *When* the system is accessed from different devices (e.g., iOS, Android, Windows), *it* must function consistently *to* reach a broader user base.                                                                                                             |
-| **Minimize Downtime**                           | Ensure high fault tolerance                        | **Fault Tolerance**    | *When* a server fails, *the system* should failover to a backup server within 3 seconds without data loss *to* maintain service continuity.                                                                                                                     |
-| **Provide Insights into System Usage**          | Enable tracking of all user interactions           | **Traceability**       | *When* actions are performed on the whiteboard, *the system* must log them in real-time with timestamps and user IDs *to* facilitate auditing and analysis.                                                                                                      |
-| **Foster Innovation in Remote Teamwork**        | Support real-time shared content editing           | **Scalability**        | *When* up to 200 concurrent users are active, *the system* should maintain performance levels without degradation in audio or video quality *to* support team collaboration.                                                                                      |
-| **Maintain Brand Reputation**                   | Ensure secure communication channels               | **Security**           | *When* data is transmitted during communication sessions, *the system* must encrypt it using TLS/SSL protocols *to* protect user privacy.                                                                                                                      |
-| **Meet Industry Standards**                     | Ensure compliance with data privacy regulations    | **Compliance**         | *When* handling user data, *the system* must comply with GDPR and HIPAA regulations *to* adhere to legal requirements.                                                                                                                                          |
-| **Provide Cost-effective Solutions**            | Optimize resource usage                            | **Performance**        | *When* under peak usage, *the system* should not exceed 70% CPU usage *to* optimize operational costs and ensure smooth performance.                                                                                                                             |
+| **What We Want**                              | **How We’ll Do It**                              | **What It Means Technically** | **What Success Looks Like**                                                                                                                                                                                                                                 |
+|------------------------------------------------|--------------------------------------------------|-------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| **Make Remote Work Easy**                      | Real-time communication                          | **Responsiveness**            | *If* users are on a video call, *then* the system should keep delay below 100ms *so that* conversations feel natural.                                                                                                                                       |
+| **Boost Productivity**                         | Smooth, uninterrupted service                    | **Availability**              | *If* a user loses connection, *then* the system should try to reconnect up to 3 times within 15 seconds *so that* they can continue working without hassle.                                                                                                   |
+| **Support Creative Work**                      | Handle different types of input devices          | **Usability**                 | *If* a user connects a new device like a digital pen, *then* the system should recognize it in 2 seconds *so that* they can keep working seamlessly.                                                                                                         |
+| **Reach a Wide Audience**                      | Work on various devices                          | **Interoperability**          | *If* someone accesses the system from an iPhone, Android, or PC, *then* it should work the same *so that* it’s useful to more people.                                                                                                                       |
+| **Stay Reliable**                              | Quick failover when something breaks             | **Fault Tolerance**           | *If* a server goes down, *then* another server should take over in 3 seconds *so that* users don’t notice any disruption.                                                                                                                                   |
+| **Understand Users**                           | Track user actions                               | **Traceability**              | *If* a user makes changes on the whiteboard, *then* those actions should be logged with a timestamp *so that* we can analyze usage patterns.                                                                                                                |
+| **Support More Users**                         | Scale up smoothly as the user base grows         | **Scalability**               | *If* 200 users join at the same time, *then* the system should keep running smoothly *so that* no one has a laggy experience.                                                                                                                               |
+| **Build Trust**                                | Secure communication channels                    | **Security**                  | *If* users are sharing files or having a video call, *then* data should be encrypted *so that* their information stays private.                                                                                                                             |
+| **Meet Regulations**                           | Follow privacy laws                              | **Compliance**                | *If* we handle user data, *then* the system must meet GDPR and HIPAA requirements *so that* we avoid legal trouble.                                                                                                                                         |
+| **Keep Costs Down**                            | Use resources efficiently                        | **Performance**               | *If* there’s a heavy load on the system, *then* it shouldn’t use more than 70% of its CPU *so that* we don’t overspend on hardware.                                                                                                                          |
 
 ---
 
@@ -82,238 +71,132 @@ The system operates within the domain of collaborative software tools, focusing 
 
 ### Business Constraints
 
-- **Global User Support**: The system must support users from different regions, considering time zones and network variations.
-- **Launch Deadline**: The system must be launched within 6 months to meet market demands.
-- **Budget Limitations**: Development and deployment costs must not exceed $500,000.
-- **User-friendly Interface**: The system should be intuitive and accessible to non-technical users.
-- **Licensing and Legal**: Must comply with licensing requirements for any third-party components used.
+- **Global Reach**: The system needs to work for users in different time zones and with varied internet speeds.
+- **Fast Launch**: We need to get this system up and running in 6 months.
+- **Stay on Budget**: Development costs need to stay under $500,000.
+- **Easy to Use**: The interface should be simple enough that anyone can use it without a training manual.
+- **Follow Licensing Rules**: Any third-party tools or services we use need to comply with licensing agreements.
 
 ### Technical Constraints
 
-- **Platform Compatibility**: The system must be compatible with iOS, Android, Windows, and macOS platforms.
-- **Cloud Infrastructure**: Should utilize cloud services like AWS or Azure for scalability and reliability.
-- **Communication Protocols**: Use WebRTC for audio and video communication to leverage its real-time capabilities.
-- **Programming Languages**: Frontend development in JavaScript/TypeScript (e.g., React or Angular), backend in Python (e.g., Django or Flask).
-- **Containerization**: Deployable using Docker containers for ease of deployment and scalability.
-- **Database Choice**: Use a NoSQL database like MongoDB for flexibility and scalability in handling unstructured data.
-- **Third-party Integrations**: Must integrate with common email providers and cloud storage services.
-- **Security Standards**: Must implement TLS/SSL encryption and adhere to OWASP security guidelines.
+- **Cross-Platform Compatibility**: It must work on iOS, Android, Windows, and macOS.
+- **Cloud-based**: We’ll use services like AWS or Azure for easier scaling.
+- **Real-time Communication**: WebRTC is our go-to for smooth video and audio chats.
+- **Tech Stack**: JavaScript/TypeScript for the frontend (React or Angular) and Python for the backend (Django or Flask).
+- **Containerized Deployment**: We’ll use Docker for easier updates and scaling.
+- **Flexible Data Handling**: MongoDB will help us store different types of data.
+- **Integration with Other Services**: We need to connect with popular email and cloud storage providers.
+- **Strong Security**: TLS/SSL encryption is a must, and we’ll follow OWASP guidelines for security.
 
 ---
 
-## 4. Functionalities
+## 4. Core Functions
 
-1. **User Registration and Authentication**: Secure account creation and login process.
-2. **Real-time Audio and Video Conferencing**: Low-latency communication with support for group calls.
-3. **Shared Whiteboard**: Collaborative drawing and sketching with real-time updates.
-4. **File Sharing and Collaboration**: Upload, download, and version control of shared files.
-5. **Email Integration**: Sending and receiving emails within the platform.
-6. **Text-based Chat**: Instant messaging for individuals and groups.
-7. **Role-based Access Control**: Permission settings based on user roles (admin, editor, viewer).
-8. **Device Management**: Configuration and management of input/output devices.
-9. **System Monitoring and Logging**: Tracking user actions and system performance metrics.
-10. **Integration with External Services**: Connectivity with cloud storage and calendar applications.
-
----
-
-## 5. Architectural Drivers
-
-1. **Responsiveness (Performance)**: Real-time interaction with minimal latency.
-2. **Availability**: High uptime with automatic recovery from failures.
-3. **Scalability**: Ability to handle increasing users and data without degradation.
-4. **Interoperability**: Seamless operation across various devices and platforms.
-5. **Security**
-
-: Robust protection of data and communications.
-6. **Usability**: Intuitive interfaces and easy device integration.
-7. **Compliance**: Adherence to regulations like GDPR and HIPAA.
-8. **Maintainability**: Ease of updates and addition of new features.
-9. **Fault Tolerance**: Graceful handling of system failures.
-10. **Traceability**: Detailed logging for auditing and troubleshooting.
-11. **Resource Efficiency**: Optimized use of resources to reduce costs.
-12. **Extensibility**: Support for future enhancements and integrations.
+1. **Sign Up and Log In**: Secure user account management.
+2. **Real-time Calls**: Low-latency video and audio calls, including group calls.
+3. **Shared Whiteboard**: Real-time sketching and collaboration.
+4. **File Sharing**: Upload, download, and manage versions of files.
+5. **Email Integration**: Send and receive emails through the platform.
+6. **Chat**: Instant messaging for one-on-one or group chats.
+7. **Control Access**: Role-based permissions for different features.
+8. **Manage Devices**: Automatically configure connected devices like webcams or pens.
+9. **Monitor System Health**: Keep track of user actions and system performance.
+10. **Connect with Other Tools**: Sync with cloud storage and calendars.
 
 ---
 
-## 6. ADD Process with Iterations
+## 5. Important Design Considerations
 
-### Iteration 1: Establish the Overall System Architecture
-
-**Relevant Views**:
-- **Module View (Static Structure)**
-
-**Diagram: High-Level Module Diagram**:
-![High-Level Module Diagram](#)  
-(Replace with a detailed diagram showing the main modules and their relationships)
-
-**Element Catalog**:
-- **User Interface Module**: Handles user interactions, UI rendering, and input capture.
-- **Communication Module**: Manages real-time audio/video conferencing, chat messaging, and email integration.
-- **Collaboration Module**: Provides functionalities like the shared whiteboard, file sharing, and collaborative editing.
-- **Data Management Module**: Manages data storage and interactions with MongoDB.
-- **Security Module**: Ensures authentication, encryption, and adherence to security standards.
-- **Integration Module**: Manages connections with external services like cloud storage and calendar applications.
-
-**Rationale**:
-- **Modularity** promotes maintainability and scalability.
-- **Layered Architecture** allows separation of concerns.
+1. **Responsiveness**: Make sure interactions happen quickly without noticeable delays.
+2. **Availability**: Keep downtime to a minimum and recover quickly from failures.
+3. **Scalability**: Handle more users as the system grows without performance issues.
+4. **Interoperability**: Ensure that the system functions well across different devices and operating systems.
+5. **Security**: Protect user data from unauthorized access.
+6. **Usability**: Make sure the interface is user-friendly.
+7. **Compliance**: Meet legal requirements like GDPR and HIPAA.
+8. **Maintainability**: Make it easy to update and add new features.
+9. **Fault Tolerance**: Ensure the system handles unexpected issues gracefully.
+10. **Resource Efficiency**: Use computing resources wisely to keep costs down.
+11. **Extensibility**: Allow for easy future improvements or feature additions.
 
 ---
 
-### Iteration 2: Address Responsiveness and Real-time Communication
+## 6. Design Process Using ADD
 
-**Relevant Views**:
-- **Process View (Dynamic Behavior)**
+We used the **Attribute-Driven Design (ADD)** method to guide our process, breaking down the system into manageable pieces:
 
-**Diagram: Sequence Diagram for Real-time Communication**:
-![Sequence Diagram for Real-time Communication](#)  
-(Replace with a detailed diagram showing interaction flows during a video call)
+### Iteration 1: Laying Out the Core Structure
 
-**Element Catalog**:
-- **WebRTC Service**: Facilitates low-latency peer-to-peer communication.
-- **Media Server**: Manages group calls and media stream distribution.
-- **Latency Optimization Service**: Manages efficient networking to minimize delays.
+- **Modules**: We broke the system into pieces like the user interface, communication tools, data management, and security. Each part has a specific job, making the system easier to update and scale.
+-
 
-**Rationale**:
-- **WebRTC** provides low-latency communication.
-- **Media Server** supports multi-party conferencing.
+ **Approach**: We chose a layered architecture where different layers handle different tasks, like user interaction, data processing, and integrations.
 
----
+### Iteration 2: Focus on Real-time Communication
 
-### Iteration 3: Enhance Scalability and Availability
+- **Handling Calls**: We use WebRTC for low-latency, peer-to-peer communication. For larger calls, we bring in a media server to manage streams.
+- **Why This Works**: It keeps things fast and flexible. We can switch to using servers if direct connections aren’t possible due to network issues.
 
-**Relevant Views**:
-- **Deployment View (Physical Architecture)**
+### Iteration 3: Making Sure It Scales
 
-**Diagram: Deployment Diagram**:
-![Deployment Diagram](#)  
-(Replace with a detailed deployment diagram showing infrastructure components)
+- **Scaling Up**: We use cloud services to automatically add more resources when user numbers spike. This keeps the experience smooth, even during peak times.
+- **Backup Plans**: We ensure that if one server fails, another takes over immediately, minimizing downtime.
 
-**Element Catalog**:
-- **Load Balancer**: Distributes incoming traffic evenly across servers.
-- **Web Servers**: Serve frontend applications and scale automatically.
-- **Media Servers**: Manage real-time media streams for video conferencing.
-- **Database Cluster**: Stores user data, logs, and collaboration states with MongoDB sharding.
-- **Security Services**: Provide authentication and encryption mechanisms.
+### Iteration 4: Security and Compliance
 
-**Rationale**:
-- **Horizontal Scaling** allows adding servers to handle load increases.
-- **Redundancy** ensures high availability and disaster recovery.
+- **Keeping Data Safe**: We use encryption to protect data and ensure that only authorized users can access sensitive information.
+- **Staying Compliant**: We built in logging and auditing tools to ensure we meet regulations like GDPR and HIPAA.
+
+### Iteration 5: Making It User-Friendly
+
+- **Device Integration**: We made sure users can easily switch between devices, like going from a phone to a laptop without losing their place.
+- **Responsive Design**: The interface adjusts automatically to different screen sizes, making it easy to use on any device.
 
 ---
 
-### Iteration 4: Implement Security and Compliance Requirements
+## 7. Evaluating the Design with ATAM
 
-**Relevant Views**:
-- **Security View**
+### Evaluating Key Scenarios
 
-**Diagram: Security Component Diagram**:
-![Security Component Diagram](#)  
-(Replace with a detailed diagram illustrating security modules)
+- **Handling Heavy Usage**: During peak times, the system should maintain a response time of less than 100ms.
+- **Reconnecting After Network Issues**: If a user gets disconnected, the system tries to reconnect within 15 seconds.
+- **Keeping Data Secure**: All communications are encrypted, and we use robust authentication to protect user privacy.
+- **Scaling to Meet Demand**: When user numbers spike, we scale up server resources automatically to keep things running smoothly.
+- **Maintaining Compliance**: We follow data privacy regulations like GDPR, logging all user actions for accountability.
 
-**Element Catalog**:
-- **Authentication Service**: Verifies user identities and manages secure sessions.
-- **Authorization Service**: Manages access control and user roles.
-- **Encryption Service**: Encrypts data both in transit and at rest.
-- **Audit Logging Service**: Records user activities for compliance and auditing.
+### Trade-offs
 
-**Rationale**:
-- **Security Tactics** ensure robust data protection.
-- **Compliance Frameworks** address legal requirements.
+- **Performance vs. Complexity**: Using WebRTC for video calls is fast but requires extra setup for peer-to-peer connections.
+- **Scalability vs. Cost**: Auto-scaling servers ensures smooth performance but can increase costs during peak usage.
 
 ---
 
-### Iteration 5: Enhance Usability and Device Integration
+## 8. Wrapping Up
 
-**Relevant Views**:
-- **User Experience (UX) View**
-
-**Diagram: High-Level UI Flow Diagram**:
-![High-Level UI Flow Diagram](#)  
-(Replace with a flow diagram showing user interactions and screen transitions)
-
-**Element Catalog**:
-- **Device Abstraction Layer**: Simplifies the integration of different input/output devices.
-- **Configuration Manager**: Manages device settings and preferences.
-- **User Interface Components**: Provides responsive UI elements for various devices.
-
-**Rationale**:
-- **Device Abstraction** streamlines integration with diverse hardware.
-- **Responsive Design** ensures a consistent experience across devices.
+This design aims to make remote collaboration smooth, reliable, and secure. By using the ADD method and analyzing the architecture with ATAM, we’ve created a system that can handle the challenges of global teamwork. The design is flexible enough to evolve with new features and scalable to grow with user demand.
 
 ---
 
-## 7. Compliance Analysis Using ATAM
+## 9. Process Details
 
-### Scenario 1: Responsiveness During Peak Usage
+### 1. How User Authentication Works
 
-- **Stimulus**: High concurrent usage.
-- **Response**: Maintain latency below 100ms.
-- **Evaluation**:
-  - **Decisions**: Use of WebRTC, load balancing, and event-driven architecture.
-  - **Trade-offs**: Increased complexity and operational cost.
-- **Compliance**: Meets the responsiveness quality attribute.
+1. User enters their login details.
+2. The system verifies credentials.
+3. If valid, a secure session is created, and the user gets access to their dashboard.
 
-### Scenario 2: Recovery from Network Disconnection
+### 2. Real-time Call Process
 
-- **Stimulus**: Network loss.
-- **Response**: Automatic reconnection within 15 seconds.
-- **Evaluation**:
-  - **Decisions**: Implement session management and reconnection logic.
-  - **Trade-offs**: Additional development effort.
-- **Compliance**: Meets the availability quality attribute.
+1. User starts a call.
+2. The system checks for availability.
+3. WebRTC sets up a connection between users.
+4. Media streams are encrypted and exchanged directly when possible.
 
-### Scenario 3: Compliance with Data Protection Regulations
+### 3. File Sharing
 
-- **Stimulus**: Handling personal data.
-- **Response**: Adhere to GDPR and HIPAA.
-- **Evaluation**:
-  - **Decisions**: Implement encryption, access controls, and audit logging.
-  - **Trade-offs**: Performance overhead due to encryption.
-- **Compliance**: Meets the compliance quality attribute.
-
-### Scenario 4: Scalability to Support 200 Concurrent Users
-
-- **Stimulus**: High user load.
-- **Response**: Maintain performance.
-- **Evaluation**:
-  - **Decisions**: Adopt microservices architecture and auto-scaling.
-  - **Trade-offs**: Increased complexity and infrastructure costs.
-- **Compliance**: Meets the scalability quality attribute.
-
-### Scenario 5: Secure Communication Channels
-
-- **Stimulus**: Data transmission.
-- **Response**: Encrypt data using TLS.
-- **Evaluation**:
-  - **Decisions**: Use TLS/SSL protocols and key management services.
-  - **Trade-offs**: Minor performance overhead.
-- **Compliance**: Meets the security quality attribute.
-
----
-
-## 8. Conclusion
-
-The proposed architecture effectively addresses the business goals and quality attributes through carefully selected architectural approaches, technologies, and design patterns. By following the Attribute-Driven Design (ADD) process and conducting Architecture Tradeoff Analysis Method (ATAM) evaluations, the architecture aligns with requirements and manages trade-offs effectively. The design ensures scalability, security, and maintainability, providing a robust platform for global collaboration.
-
----
-
-## 9. Appendix: Detailed Process Flows
-
-### 1. User Authentication Process
-
-**Flowchart**:
-- **User Inputs Credentials** → **Authentication Service** → **Session Creation** → **Authorization Service** → **Access Granted**.
-
-### 2. Real-time Communication Process
-
-**Sequence**:
-- **Initiate Call** → **Session Manager** → **WebRTC Setup** → **Media Stream Exchange** → **End Call**.
-
-### 3. File Sharing Process
-
-**Flow**:
-- **Upload File** → **Validation** → **Temporary Storage** → **Virus Scan** → **Metadata Creation** → **Access Rights** → **Download**.
+1. User uploads a file.
+2. The system checks for any issues (like viruses).
+3. The file is stored securely, and team members are notified.
 
 ---
 
@@ -324,7 +207,3 @@ The proposed architecture effectively addresses the business goals and quality a
 - **WebRTC Specifications**
 - **GDPR and HIPAA Compliance Guidelines**
 - **OWASP Security Practices**
-
----
-
-This updated version of the report offers a more detailed and refined approach, integrating technical depth and aligning with best practices for software architecture. The improved diagrams and explanations will make it easier for stakeholders to understand the design and its rationale.
